@@ -1,100 +1,83 @@
 import React, { useState } from "react";
-
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Menu = () => {
   const [selectedMenu, setSelectedMenu] = useState(0);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
-  const handleMenuClick = (index) => {
-    setSelectedMenu(index);
+  // Menu items list — easy to add/remove items
+  const menuItems = [
+    { label: "Dashboard", path: "/", index: 0 },
+    { label: "Orders", path: "/orders", index: 1 },
+    { label: "Holdings", path: "/holdings", index: 2 },
+    { label: "Positions", path: "/positions", index: 3 },
+    { label: "Funds", path: "/funds", index: 4 },
+    { label: "Apps", path: "/apps", index: 5 },
+  ];
+
+  // Logout: clear auth and go back to signup/login page
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    navigate("/signup");
   };
-
-  const handleProfileClick = (index) => {
-    setIsProfileDropdownOpen(!isProfileDropdownOpen);
-  };
-
-  const menuClass = "menu";
-  const activeMenuClass = "menu selected";
 
   return (
     <div className="menu-container">
-    
-      <img src="logo.png" style={{ width: "50px" }} />
-      <div className="menus">
+      {/* Logo */}
+      <img src="logo.png" className="menu-logo" alt="logo" />
+
+      {/* Hamburger button — visible only on mobile */}
+      <button
+        className="hamburger"
+        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        aria-label="Toggle menu"
+      >
+        <span />
+        <span />
+        <span />
+      </button>
+
+      {/* Nav links */}
+      <div className={`menus ${isMobileMenuOpen ? "open" : ""}`}>
         <ul>
-          <li>
-            <Link
-              style={{ textDecoration: "none" }}
-              to="/"
-              onClick={() => handleMenuClick(0)}
-            >
-              <p className={selectedMenu === 0 ? activeMenuClass : menuClass}>
-                Dashboard
-              </p>
-            </Link>
-          </li>
-          <li>
-            <Link
-              style={{ textDecoration: "none" }}
-              to="/orders"
-              onClick={() => handleMenuClick(1)}
-            >
-              <p className={selectedMenu === 1 ? activeMenuClass : menuClass}>
-                Orders
-              </p>
-            </Link>
-          </li>
-          <li>
-            <Link
-              style={{ textDecoration: "none" }}
-              to="/holdings"
-              onClick={() => handleMenuClick(2)}
-            >
-              <p className={selectedMenu === 2 ? activeMenuClass : menuClass}>
-                Holdings
-              </p>
-            </Link>
-          </li>
-          <li>
-            <Link
-              style={{ textDecoration: "none" }}
-              to="/positions"
-              onClick={() => handleMenuClick(3)}
-            >
-              <p className={selectedMenu === 3 ? activeMenuClass : menuClass}>
-                Positions
-              </p>
-            </Link>
-          </li>
-          <li>
-            <Link
-              style={{ textDecoration: "none" }}
-              to="funds"
-              onClick={() => handleMenuClick(4)}
-            >
-              <p className={selectedMenu === 4 ? activeMenuClass : menuClass}>
-                Funds
-              </p>
-            </Link>
-          </li>
-          <li>
-            <Link
-              style={{ textDecoration: "none" }}
-              to="/apps"
-              onClick={() => handleMenuClick(6)}
-            >
-              <p className={selectedMenu === 6 ? activeMenuClass : menuClass}>
-                Apps
-              </p>
-            </Link>
-          </li>
+          {menuItems.map((item) => (
+            <li key={item.index}>
+              <Link
+                to={item.path}
+                style={{ textDecoration: "none" }}
+                onClick={() => {
+                  setSelectedMenu(item.index);
+                  setIsMobileMenuOpen(false); // close on mobile after click
+                }}
+              >
+                <p className={selectedMenu === item.index ? "menu selected" : "menu"}>
+                  {item.label}
+                </p>
+              </Link>
+            </li>
+          ))}
         </ul>
-        <hr />
-        <div className="profile" onClick={handleProfileClick}>
+
+        <hr className="menu-divider" />
+
+        {/* Profile section */}
+        <div className="profile" onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}>
           <div className="avatar">ZU</div>
-          <p className="username">USERID</p>
+          <p className="username">User</p>
         </div>
+
+        {/* Profile dropdown */}
+        {isProfileDropdownOpen && (
+          <div className="profile-dropdown">
+            <p className="dropdown-item">My Profile</p>
+            <p className="dropdown-item">Settings</p>
+            <p className="dropdown-item logout" onClick={handleLogout}>
+              Logout
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

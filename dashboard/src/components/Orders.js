@@ -5,9 +5,10 @@ const Orders = () => {
   return (
     <div className="orders">
       <div className="no-orders">
+        {/* Empty state illustration */}
+        <div className="empty-icon">📋</div>
         <p>You haven't placed any orders today</p>
-
-        <Link to={"/"} className="btn">
+        <Link to="/" className="btn btn-blue">
           Get started
         </Link>
       </div>

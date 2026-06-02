@@ -1,87 +1,51 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
+// Funds page — shows available margin and fund details
 const Funds = () => {
   return (
-    <>
-      <div className="funds">
-        <p>Instant, zero-cost fund transfers with UPI </p>
-        <Link className="btn btn-green">Add funds</Link>
-        <Link className="btn btn-blue">Withdraw</Link>
-      </div>
+    <div className="funds-container">
+      <h3 className="title">Funds</h3>
 
-      <div className="row">
-        <div className="col">
-          <span>
-            <p>Equity</p>
-          </span>
-
-          <div className="table">
-            <div className="data">
-              <p>Available margin</p>
-              <p className="imp colored">4,043.10</p>
-            </div>
-            <div className="data">
-              <p>Used margin</p>
-              <p className="imp">3,757.30</p>
-            </div>
-            <div className="data">
-              <p>Available cash</p>
-              <p className="imp">4,043.10</p>
-            </div>
-            <hr />
-            <div className="data">
-              <p>Opening Balance</p>
-              <p>4,043.10</p>
-            </div>
-            <div className="data">
-              <p>Opening Balance</p>
-              <p>3736.40</p>
-            </div>
-            <div className="data">
-              <p>Payin</p>
-              <p>4064.00</p>
-            </div>
-            <div className="data">
-              <p>SPAN</p>
-              <p>0.00</p>
-            </div>
-            <div className="data">
-              <p>Delivery margin</p>
-              <p>0.00</p>
-            </div>
-            <div className="data">
-              <p>Exposure</p>
-              <p>0.00</p>
-            </div>
-            <div className="data">
-              <p>Options premium</p>
-              <p>0.00</p>
-            </div>
-            <hr />
-            <div className="data">
-              <p>Collateral (Liquid funds)</p>
-              <p>0.00</p>
-            </div>
-            <div className="data">
-              <p>Collateral (Equity)</p>
-              <p>0.00</p>
-            </div>
-            <div className="data">
-              <p>Total Collateral</p>
-              <p>0.00</p>
-            </div>
+      <div className="funds-grid">
+        {/* Equity funds card */}
+        <div className="fund-card">
+          <h4 className="fund-card-title">Equity</h4>
+          <div className="fund-row">
+            <span className="fund-label">Available margin</span>
+            <span className="fund-value colored">₹3,740.00</span>
+          </div>
+          <hr className="fund-divider" />
+          <div className="fund-row">
+            <span className="fund-label">Used margin</span>
+            <span className="fund-value">₹0.00</span>
+          </div>
+          <div className="fund-row">
+            <span className="fund-label">Opening balance</span>
+            <span className="fund-value">₹3,740.00</span>
+          </div>
+          <div className="fund-row">
+            <span className="fund-label">SPAN margin</span>
+            <span className="fund-value">₹0.00</span>
+          </div>
+          <div className="fund-row">
+            <span className="fund-label">Delivery margin</span>
+            <span className="fund-value">₹0.00</span>
+          </div>
+          <div className="fund-actions">
+<button className="btn btn-green">Add funds</button>
+<button className="btn btn-blue">Withdraw</button>
           </div>
         </div>
 
-        <div className="col">
-          <div className="commodity">
-            <p>You don't have a commodity account</p>
-            <Link className="btn btn-blue">Open Account</Link>
-          </div>
+        {/* Commodity funds card */}
+        <div className="fund-card">
+          <h4 className="fund-card-title">Commodity</h4>
+          <div className="commodity-empty">
+            <p>You don't have a commodity account.</p>
+<button className="btn btn-blue">Open account</button>          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

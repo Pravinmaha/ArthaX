@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-
 import BuyActionWindow from "./BuyActionWindow";
 
+// Create context with default empty functions
 const GeneralContext = React.createContext({
   openBuyWindow: (uid) => {},
   closeBuyWindow: () => {},
 });
 
+// Provider component wraps WatchList and provides buy/sell window control
 export const GeneralContextProvider = (props) => {
   const [isBuyWindowOpen, setIsBuyWindowOpen] = useState(false);
   const [selectedStockUID, setSelectedStockUID] = useState("");
@@ -29,7 +30,10 @@ export const GeneralContextProvider = (props) => {
       }}
     >
       {props.children}
-      {isBuyWindowOpen && <BuyActionWindow uid={selectedStockUID} />}
+      {/* Show buy window only when triggered */}
+      {isBuyWindowOpen && (
+        <BuyActionWindow uid={selectedStockUID} />
+      )}
     </GeneralContext.Provider>
   );
 };
